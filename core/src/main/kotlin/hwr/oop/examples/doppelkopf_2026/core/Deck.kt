@@ -5,6 +5,8 @@ data class Deck(
 ) {
 	fun cards(): List<Card> = cards
 	
+	fun toMutableDeck(): MutableDeck = MutableDeck(cards.toMutableList())
+	
 	companion object {
 		fun createRandom(includeNeun: Boolean): Deck = Deck(
 			(1..2).flatMap {
@@ -17,3 +19,4 @@ data class Deck(
 		)
 	}
 }
+
