@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>hwr.oop.lecture.examples</groupId>
-  <artifactId>template</artifactId>
+  <artifactId>doppelkopf_2026</artifactId>
   <version>0.1.0</version>
   <packaging>pom</packaging>
 
@@ -17,10 +17,10 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <kotlin.version>2.3.0</kotlin.version>
-    <java.version>21</java.version>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
+    <kotlin.version>2.3.21</kotlin.version>
+    <java.version>25</java.version>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
 
     <!-- Dependency versions -->
     <junit-bom.version>6.0.3</junit-bom.version>
