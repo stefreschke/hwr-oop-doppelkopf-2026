@@ -15,7 +15,7 @@ data class Deck(
 						.filter { includeNeun || it != Rank.NEUN }
 						.map { rank -> Card(suit, rank) }
 				}
-			}
+			}.shuffled()
 		)
 	}
 }
