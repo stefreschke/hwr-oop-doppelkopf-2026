@@ -1,31 +1,36 @@
 openapi: 3.0.3
 info:
-  title: Template Service API
-  description: API for the template service
+  title: Doppelkopf Service API
+  description: API for the Doppelkopf service
   version: 1.0.0
 servers:
   - url: http://localhost:8080
     description: Local development server
+tags:
+  - name: GameRead
+    description: Operations related to reading game data
+  - name: GameWrite
+    description: Operations related to creating and updating games
 paths:
-  /trains:
+  /games:
     post:
-      summary: Create a new train
-      operationId: createTrain
+      summary: Create a new game
+      operationId: createGame
       tags:
-        - TrainWrite
+        - GameWrite
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTrainRequest'
+              $ref: '#/components/schemas/CreateGameRequest'
       responses:
         '201':
-          description: Train created successfully
+          description: Game created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TrainCreatedResponse'
+                $ref: '#/components/schemas/GameCreatedResponse'
         '400':
           description: Bad request
           content:
@@ -38,71 +43,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /trains/{trainId}:
-    post:
-      summary: Update an existing train
-      operationId: updateTrain
-      tags:
-        - TrainWrite
-      parameters:
-        - name: trainId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The unique identifier of the train to update
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateTrainRequest'
-      responses:
-        '200':
-          description: Train updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TrainResponse'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Train not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+  /games/{gameId}:
     get:
-      summary: Get train by ID
-      operationId: getTrain
+      summary: Get game by ID
+      operationId: getGame
       tags:
-        - TrainRead
+        - GameRead
       parameters:
-        - name: trainId
+        - name: gameId
           in: path
           required: true
           schema:
             type: string
-          description: The unique identifier of the train
+          description: The unique identifier of the game
       responses:
         '200':
-          description: Train retrieved successfully
+          description: Game retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TrainResponse'
+                $ref: '#/components/schemas/GameResponse'
         '404':
-          description: Train not found
+          description: Game not found
           content:
             application/json:
               schema:
@@ -113,68 +75,92 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
 components:
   schemas:
-    CreateTrainRequest:
+    GameResponse:
       type: object
       required:
-        - trainNumber
-        - maxSpeed
+        - id
         - name
+        - players
       properties:
-        trainNumber:
-          type: integer
-          description: The train number
-        maxSpeed:
-          type: integer
-          description: The maximum speed of the train in km/h
-        name:
+        id:
           type: string
-          description: The name of the train
-    TrainCreatedResponse:
+          description: The unique identifier of the game
+        currentPlayer:
+          $ref: '#/components/schemas/PlayerId'
+        bout:
+          $ref: '#/components/schemas/Bout'
+        playerHands:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerHand'
+
+    Bout:
+      type: object
+      required:
+        - cards
+      properties:
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+
+    GameCreatedResponse:
       type: object
       required:
         - id
       properties:
         id:
           type: string
-          description: The unique identifier of the created train
-    UpdateTrainRequest:
+          description: The unique identifier of the created game
+
+    PlayerId:
+      type: string
+      description: The unique identifier of a player
+
+    PlayerHand:
       type: object
       required:
-        - trainNumber
-        - maxSpeed
-        - name
+        - playerId
+        - cards
       properties:
-        trainNumber:
-          type: integer
-          description: The train number
-        maxSpeed:
-          type: integer
-          description: The maximum speed of the train in km/h
-        name:
-          type: string
-          description: The name of the train
-    TrainResponse:
+        playerId:
+          $ref: '#/components/schemas/PlayerId'
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+
+    Card:
       type: object
       required:
-        - id
-        - trainNumber
-        - maxSpeed
-        - name
+        - suit
+        - rank
       properties:
-        id:
+        suit:
           type: string
-          description: The unique identifier of the train
-        trainNumber:
-          type: integer
-          description: The train number
-        maxSpeed:
-          type: integer
-          description: The maximum speed of the train in km/h
+          description: The suit of the card (e.g., Hearts, Diamonds, Clubs, Spades)
+        rank:
+          type: string
+          description: The rank of the card (e.g., 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A)
+
+    CreateGameRequest:
+      type: object
+      required:
+        - name
+        - playerIds
+      properties:
         name:
           type: string
-          description: The name of the train
+          description: The name of the game
+        playerIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerId'
+
+
     ErrorResponse:
       type: object
       required:

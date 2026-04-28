@@ -1,30 +1,23 @@
 package hwr.oop.examples.template.service
 
-import hwr.oop.examples.template.service.api.TrainReadApi
-import hwr.oop.examples.template.service.api.TrainWriteApi
-import hwr.oop.examples.template.service.model.CreateTrainRequest
-import hwr.oop.examples.template.service.model.TrainCreatedResponse
-import hwr.oop.examples.template.service.model.TrainResponse
-import hwr.oop.examples.template.service.model.UpdateTrainRequest
+import hwr.oop.examples.template.service.api.GameReadApi
+import hwr.oop.examples.template.service.api.GameWriteApi
+import hwr.oop.examples.template.service.model.CreateGameRequest
+import hwr.oop.examples.template.service.model.GameCreatedResponse
+import hwr.oop.examples.template.service.model.GameResponse
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class Controller : TrainWriteApi, TrainReadApi {
+class Controller : GameReadApi, GameWriteApi {
 	
-	override fun createTrain(createTrainRequest: @Valid CreateTrainRequest?): ResponseEntity<TrainCreatedResponse> {
+	override fun getGame(gameId: String?): ResponseEntity<GameResponse> {
 		TODO("Not yet implemented")
 	}
 	
-	override fun updateTrain(
-		trainId: String?,
-		updateTrainRequest: @Valid UpdateTrainRequest?,
-	): ResponseEntity<TrainResponse> {
+	override fun createGame(createGameRequest: @Valid CreateGameRequest?): ResponseEntity<GameCreatedResponse> {
 		TODO("Not yet implemented")
 	}
 	
-	override fun getTrain(trainId: String?): ResponseEntity<TrainResponse> {
-		TODO("Not yet implemented")
-	}
 }
