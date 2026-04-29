@@ -19,11 +19,11 @@ class DealingCardsAtTheBeginningTest {
 		"true, 12",
 		"false, 10",
 	)
-	fun `create new Game, each player has correct hand size`(withNeun: Boolean, expectedNumberOfCards: Int) {
+	fun `create new Game, each player has correct hand size`(withNine: Boolean, expectedNumberOfCards: Int) {
 		// given
 		val game = Game.create(
 			players = players,
-			withNeun = withNeun,
+			withNine = withNine,
 		)
 		
 		// when
@@ -37,11 +37,11 @@ class DealingCardsAtTheBeginningTest {
 	
 	@ParameterizedTest
 	@ValueSource(booleans = [true, false])
-	fun `create new Game, each card exists twice across all players`(withNeun: Boolean) {
+	fun `create new Game, each card exists twice across all players`(withNine: Boolean) {
 		// given
 		val game = Game.create(
 			players = players,
-			withNeun = withNeun,
+			withNine = withNine,
 		)
 		
 		// when
@@ -67,7 +67,7 @@ class DealingCardsAtTheBeginningTest {
 		assertThatThrownBy {
 			Game.create(
 				players = players,
-				withNeun = true,
+				withNine = true,
 			)
 		}.hasMessageContaining("exactly 4 players")
 	}

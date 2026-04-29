@@ -14,12 +14,12 @@ class BasicCardCreationTest {
 		// when
 		// then
 		assertThat(ranks).containsExactlyInAnyOrder(
-			Rank.NEUN,
-			Rank.ZEHN,
-			Rank.UNTER,
-			Rank.OBER,
-			Rank.KOENIG,
-			Rank.DAUSS,
+			Rank.NINE,
+			Rank.TEN,
+			Rank.JACK,
+			Rank.QUEEN,
+			Rank.KING,
+			Rank.ACE,
 		)
 	}
 	
@@ -27,14 +27,7 @@ class BasicCardCreationTest {
 	@EnumSource(Suit::class)
 	fun `all ranks, each suit can exist`(suit: Suit) {
 		// given
-		val allRanks = listOf(
-			Rank.NEUN,
-			Rank.ZEHN,
-			Rank.UNTER,
-			Rank.OBER,
-			Rank.KOENIG,
-			Rank.DAUSS,
-		)
+		val allRanks = Rank.entries
 		
 		// when
 		val cards = allRanks.map { Card(suit, it) }
@@ -55,10 +48,10 @@ class BasicCardCreationTest {
 		// when
 		// then
 		assertThat(suits).containsExactlyInAnyOrder(
-			Suit.GRUEN,
-			Suit.EICHEL,
-			Suit.HERZ,
-			Suit.SCHELLEN,
+			Suit.SPADES,
+			Suit.HEARTS,
+			Suit.DIAMONDS,
+			Suit.CLUBS
 		)
 	}
 	
@@ -66,12 +59,7 @@ class BasicCardCreationTest {
 	@EnumSource(Rank::class)
 	fun `all suits, each rank can exist`(rank: Rank) {
 		// given
-		val allSuits = listOf(
-			Suit.GRUEN,
-			Suit.HERZ,
-			Suit.SCHELLEN,
-			Suit.EICHEL
-		)
+		val allSuits = Suit.entries
 		
 		// when
 		val cards = allSuits.map { Card(it, rank) }

@@ -11,19 +11,19 @@ class ShortHandleForCardsTest {
 	@ParameterizedTest
 	@CsvSource(
 		// normal cards
-		"SD, SCHELLEN, DAUSS",
-		"sd, SCHELLEN, DAUSS",
-		"HK, HERZ, KOENIG",
-		"hk, HERZ, KOENIG",
-		"GU, GRUEN, UNTER",
-		"gu, GRUEN, UNTER",
-		"EO, EICHEL, OBER",
-		"eo, EICHEL, OBER",
+		"AD, DIAMONDS, ACE",
+		"ad, DIAMONDS, ACE",
+		"KH, HEARTS, KING",
+		"kh, HEARTS, KING",
+		"JS, SPADES, JACK",
+		"js, SPADES, JACK",
+		"QC, CLUBS, QUEEN",
+		"qc, CLUBS, QUEEN",
 		// special cards
-		"FUCHS, SCHELLEN, DAUSS",
-		"fUcHs, SCHELLEN, DAUSS",
-		"DULLE, HERZ, ZEHN",
-		"DuLlE, HERZ, ZEHN",
+		"FUCHS, DIAMONDS, ACE",
+		"fUcHs, DIAMONDS, ACE",
+		"DULLE, HEARTS, TEN",
+		"DuLlE, HEARTS, TEN",
 	)
 	fun `string correctly parsed to card`(inputString: String, suit: Suit, rank: Rank) {
 		// when

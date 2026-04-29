@@ -8,12 +8,10 @@ data class Deck(
 	fun toMutableDeck(): MutableDeck = MutableDeck(cards.toMutableList())
 	
 	companion object {
-		fun createRandom(includeNeun: Boolean): Deck = Deck(
+		fun createRandom(includeNine: Boolean): Deck = Deck(
 			(1..2).flatMap {
 				Suit.entries.flatMap { suit ->
-					Rank.entries
-						.filter { includeNeun || it != Rank.NEUN }
-						.map { rank -> Card(suit, rank) }
+					Rank.entries.filter { includeNine || it != Rank.NINE }.map { rank -> Card(suit, rank) }
 				}
 			}.shuffled()
 		)

@@ -5,19 +5,19 @@ class Game(
 	private val players: List<PlayerId> = handsOfPlayers.map { it.player() },
 ) {
 	companion object {
-		fun create(players: List<PlayerId>, withNeun: Boolean): Game {
+		fun create(players: List<PlayerId>, withNine: Boolean): Game {
 			require(players.size == 4) { "Doppelkopf is always played with exactly 4 players" }
-			val deck = Deck.createRandom(withNeun).toMutableDeck()
-			val hands = buildHandsBasedOn(players, deck, withNeun)
+			val deck = Deck.createRandom(withNine).toMutableDeck()
+			val hands = buildHandsBasedOn(players, deck, withNine)
 			return Game(handsOfPlayers = hands)
 		}
 		
 		private fun buildHandsBasedOn(
 			players: List<PlayerId>,
 			deck: MutableDeck,
-			withNeun: Boolean,
+			withNine: Boolean,
 		): List<Hand> {
-			val steps = dealingStepsBasedOn(withNeun)
+			val steps = dealingStepsBasedOn(withNine)
 			val playerHandCards = players.associateWith { _ -> mutableListOf<Card>() }
 			steps.forEach { step ->
 				players.forEach { player ->
@@ -33,7 +33,7 @@ class Game(
 			return hands
 		}
 		
-		private fun dealingStepsBasedOn(withNeun: Boolean): List<Int> = if (withNeun) {
+		private fun dealingStepsBasedOn(withNine: Boolean): List<Int> = if (withNine) {
 			listOf(4, 4, 4)
 		} else {
 			listOf(3, 4, 3)
