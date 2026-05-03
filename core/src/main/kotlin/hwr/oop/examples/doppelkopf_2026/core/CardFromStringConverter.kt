@@ -1,6 +1,11 @@
 package hwr.oop.examples.doppelkopf_2026.core
 
 object CardFromStringConverter {
+	
+	fun convert(vararg strings: String) = convert(strings.toList())
+	
+	private fun convert(list: List<String>): List<Card> = list.map { it.asCard() }
+	
 	fun String.asCard(): Card {
 		require(isNotEmpty()) { "Card string must not be empty" }
 		require(isNotBlank()) { "Card string must not be blank" }
