@@ -1,5 +1,9 @@
-package hwr.oop.examples.doppelkopf_2026.core
+package hwr.oop.examples.doppelkopf_2026.core.bouts
 
+import hwr.oop.examples.doppelkopf_2026.core.Bout
+import hwr.oop.examples.doppelkopf_2026.core.CardFromStringConverter
+import hwr.oop.examples.doppelkopf_2026.core.GameType
+import hwr.oop.examples.doppelkopf_2026.core.PlayerId
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -133,5 +137,29 @@ class SimpleColorBoutTest {
 			.isNotNull
 			.isEqualTo(alpha)
 			.isEqualTo(afterWinningCardPlayed.lastPlayer())
+	}
+	
+	@Test
+	fun `bout, only color, all spades, first ace by beta, beta is winner`() {
+	  // given
+	  // when
+	  // then
+	  TODO("Not yet implemented")
+	}
+	
+	@Test
+	fun `bout, only color, all spades, first ten by alpha, no card higher than ten, alpha is winner`() {
+		// given
+		// when
+		// then
+		TODO("Not yet implemented")
+	}
+	
+	@Test
+	fun `bout, only color, all spades, first ten by gamma, no card higher than ten, gamma is winner`() {
+		// given
+		// when
+		// then
+		TODO("Not yet implemented")
 	}
 }
