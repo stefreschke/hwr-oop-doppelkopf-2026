@@ -49,10 +49,10 @@ class DealingCardsAtTheBeginningTest {
 			game.handOf(player)
 		}
 		
+		// then
 		val allCards = hands.flatMap { it.cards() }
 		val allCardsDistinct = allCards.distinct()
 		
-		// then
 		assertThat(allCardsDistinct).allSatisfy { card ->
 			val equalCards = allCards.filter { it == card }
 			assertThat(equalCards).hasSize(2)

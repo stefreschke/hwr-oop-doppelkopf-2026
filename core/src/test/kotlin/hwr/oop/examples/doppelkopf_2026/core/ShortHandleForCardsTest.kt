@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class ShortHandleForCardsTest {
 	
-	val sut = CardFromStringConverter
+	private val sut = CardFromStringConverter
 	
 	@ParameterizedTest
 	@CsvSource(
