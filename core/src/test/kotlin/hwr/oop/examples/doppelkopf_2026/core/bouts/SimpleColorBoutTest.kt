@@ -141,25 +141,49 @@ class SimpleColorBoutTest {
 	
 	@Test
 	fun `bout, only color, all spades, first ace by beta, beta is winner`() {
-	  // given
-	  // when
-	  // then
-	  TODO("Not yet implemented")
+		// given
+		val startingBout = Bout(gameType = GameType.NORMAL, playerOrder = listOf(alpha, beta, gamma, delta))
+		val (ace, king, ten) = CardFromStringConverter.convert("AS", "KS", "TS")
+		// when
+		val afterWinningCardPlayed = startingBout.put(ten).put(ace)
+		val finishedBout = afterWinningCardPlayed.put(ten).put(king)
+		// then
+		val winner = finishedBout.winner()
+		assertThat(winner)
+			.isNotNull
+			.isEqualTo(beta)
+			.isEqualTo(afterWinningCardPlayed.lastPlayer())
 	}
 	
 	@Test
 	fun `bout, only color, all spades, first ten by alpha, no card higher than ten, alpha is winner`() {
 		// given
+		val bout = Bout(gameType = GameType.NORMAL, playerOrder = listOf(alpha, beta, gamma, delta))
+		val (king, ten) = CardFromStringConverter.convert("KS", "TS")
 		// when
+		val afterWinningCardPlayed = bout.put(ten)
+		val finishedBout = afterWinningCardPlayed.put(king).put(king).put(ten)
 		// then
-		TODO("Not yet implemented")
+		val winner = finishedBout.winner()
+		assertThat(winner)
+			.isNotNull
+			.isEqualTo(alpha)
+			.isEqualTo(afterWinningCardPlayed.lastPlayer())
 	}
 	
 	@Test
 	fun `bout, only color, all spades, first ten by gamma, no card higher than ten, gamma is winner`() {
 		// given
+		val bout = Bout(gameType = GameType.NORMAL, playerOrder = listOf(alpha, beta, gamma, delta))
+		val (king, ten) = CardFromStringConverter.convert("KS", "TS")
 		// when
+		val afterWinningCardPlayed = bout.put(king).put(king).put(ten)
+		val finishedBout = afterWinningCardPlayed.put(ten)
 		// then
-		TODO("Not yet implemented")
+		val winner = finishedBout.winner()
+		assertThat(winner)
+			.isNotNull
+			.isEqualTo(gamma)
+			.isEqualTo(afterWinningCardPlayed.lastPlayer())
 	}
 }
