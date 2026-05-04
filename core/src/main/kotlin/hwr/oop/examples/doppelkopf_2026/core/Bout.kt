@@ -33,6 +33,8 @@ data class Bout(
 	
 	fun lastPlayer(): PlayerId? = if (cards.isEmpty()) null else playerOrder[cards.size - 1]
 	
+	fun leader(): PlayerId? = leadingPlayer
+	
 	fun winner(): PlayerId? = if (cards.size == 4) leadingPlayer else null
 	
 	// methods

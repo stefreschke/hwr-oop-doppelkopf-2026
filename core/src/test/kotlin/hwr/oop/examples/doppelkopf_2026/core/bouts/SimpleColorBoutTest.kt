@@ -186,4 +186,22 @@ class SimpleColorBoutTest {
 			.isEqualTo(gamma)
 			.isEqualTo(afterWinningCardPlayed.lastPlayer())
 	}
+	
+	@Test
+	fun `bout, only color, all spades, beta and delta strike, bout knows about leading player`() {
+		// given
+		val beforeFirstCard = Bout(gameType = GameType.NORMAL, playerOrder = listOf(alpha, beta, gamma, delta))
+		val (ace, king, ten) = CardFromStringConverter.convert("AS", "KS", "TS")
+		// when
+		val afterFirstCard = beforeFirstCard.put(king)
+		val afterSecondCard = afterFirstCard.put(ten)
+		val afterThirdCard = afterSecondCard.put(ten)
+		val finishedBout = afterThirdCard.put(ace)
+		// then
+		assertThat(beforeFirstCard.leader()).isNull()
+		assertThat(afterFirstCard.leader()).isEqualTo(alpha)  // initial play
+		assertThat(afterSecondCard.leader()).isEqualTo(beta)  // strike
+		assertThat(afterThirdCard.leader()).isEqualTo(beta)
+		assertThat(finishedBout.leader()).isEqualTo(delta).isEqualTo(finishedBout.winner())  // final strike
+	}
 }
