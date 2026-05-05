@@ -2,6 +2,8 @@ package hwr.oop.examples.doppelkopf_2026.core
 
 object CardFromStringConverter {
 	
+	fun convertSingle(cardString: String): Card = convert(cardString).first()
+	
 	fun convert(vararg strings: String) = convert(strings.toList())
 	
 	private fun convert(list: List<String>): List<Card> = list.map { it.asCard() }
