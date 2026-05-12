@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>hwr.oop.lecture.examples</groupId>
-    <artifactId>template</artifactId>
+    <artifactId>doppelkopf_2026</artifactId>
     <version>0.1.0</version>
   </parent>
 
