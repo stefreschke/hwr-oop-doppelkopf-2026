@@ -5,13 +5,8 @@ import hwr.oop.examples.doppelkopf_2026.core.CardFromStringConverter
 import hwr.oop.examples.doppelkopf_2026.core.GameType
 import hwr.oop.examples.doppelkopf_2026.core.PlayerId
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.component3
-import kotlin.collections.component4
 
 class TrumpOnlyBoutsTest {
 	
@@ -21,17 +16,16 @@ class TrumpOnlyBoutsTest {
 	private val gamma = PlayerId("gamma")
 	private val delta = PlayerId("delta")
 	
-	@Disabled("Failing - needs fix")
 	@ParameterizedTest
 	@CsvSource(
 		// kings
-		"KD, TD, AD, JD",
+		"KD, TD, FUCHS, JD",
 		// jacks
 		"JD, JH, JS, JC",
 		"JH, JS, JC, QD",
 		// queens
-		"QD, QH, QS, QC"
-		//
+		"QD, QH, QS, QC",
+		"QH, QS, QC, DULLE"
 	)
 	fun `ascending trumps`(firstString: String, secondString: String, thirdString: String, fourthString: String) {
 		// given

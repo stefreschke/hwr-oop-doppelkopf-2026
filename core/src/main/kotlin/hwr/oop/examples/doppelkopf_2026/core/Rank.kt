@@ -5,8 +5,8 @@ enum class Rank(
 	private val trumpOrder: Int,
 ) : Comparable<Rank> {
 	NINE(0, 0),
-	JACK(1, 3),
-	QUEEN(2, 4),
+	JACK(1, 4),
+	QUEEN(2, 5),
 	KING(3, 1),
 	TEN(4, 2),
 	ACE(5, 3);
