@@ -15,6 +15,8 @@ object CardFromStringConverter {
 		return when (uppercase) {
 			"FUCHS" -> Card(Suit.DIAMONDS, Rank.ACE)
 			"DULLE" -> Card(Suit.HEARTS, Rank.TEN)
+			"TH" -> throw IllegalArgumentException("Use \"DULLE\" instead of \"TH\" for the Ten of Hearts")
+			"AD" -> throw IllegalArgumentException("Use \"FUCHS\" instead of \"AD\" for the Ace of Diamonds")
 			else -> {
 				require(this.length == 2) { "Card string must be exactly 2 characters long" }
 				val rankChar = uppercase[0]

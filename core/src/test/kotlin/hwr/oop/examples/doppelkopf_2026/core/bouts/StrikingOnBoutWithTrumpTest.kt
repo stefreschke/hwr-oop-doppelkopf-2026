@@ -20,10 +20,10 @@ class StrikingOnBoutWithTrumpTest {
 	private val king = convertSingle("KC")
 	private val trumpKing = convertSingle("KD")
 	private val trumpTen = convertSingle("TD")
-	private val trumpAce = convertSingle("AD")
+	private val trumpAce = convertSingle("FUCHS")
 	private val trumpJack = convertSingle("JS")
 	private val trumpQueen = convertSingle("QC")
-	private val heartTen = convertSingle("TH")
+	private val heartTen = convertSingle("DULLE")
 	
 	@Test
 	fun `gamma strikes with trump, gamma wins`() {

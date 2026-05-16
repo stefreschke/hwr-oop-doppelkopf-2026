@@ -11,12 +11,12 @@ class ShortHandleForCardsTest {
 	@ParameterizedTest
 	@CsvSource(
 		// normal cards
-		"AD, DIAMONDS, ACE",
-		"ad, DIAMONDS, ACE",
+		"AS, SPADES, ACE",
+		"as, SPADES, ACE",
 		"KH, HEARTS, KING",
 		"kh, HEARTS, KING",
-		"JS, SPADES, JACK",
-		"js, SPADES, JACK",
+		"JD, DIAMONDS, JACK",
+		"jd, DIAMONDS, JACK",
 		"QC, CLUBS, QUEEN",
 		"qc, CLUBS, QUEEN",
 		// special cards
