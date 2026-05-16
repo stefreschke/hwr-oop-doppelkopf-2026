@@ -6,8 +6,9 @@ enum class GameType {
 		private val rankComparator = Rank.ColorComparator
 		private val suitComparator = Suit.NaiveComparator
 		
-		override fun comparator(): Comparator<Card> {
-			return { a, b ->
+		override fun comparator(card: Card?): Comparator<Card>? {
+			return if (card == null) null
+			else Comparator { a, b ->
 				if (a.isTrump() && b.isTrump()) {
 					if (a.isDulle() && b.isDulle()) {
 						0
@@ -24,7 +25,13 @@ enum class GameType {
 				} else if (a.isTrump() && !b.isTrump()) {
 					1
 				} else {
-					rankComparator.compare(a.rank(), b.rank())
+					if (a.suit() == b.suit()) {
+						rankComparator.compare(a.rank(), b.rank())
+					} else if (a.suit() == card.suit()) {
+						1
+					} else {
+						-1
+					}
 				}
 			}
 		}
@@ -35,5 +42,5 @@ enum class GameType {
 			this.rank() in listOf(Rank.JACK, Rank.QUEEN) || this.suit() == Suit.DIAMONDS || this.isDulle()
 	};
 	
-	abstract fun comparator(): Comparator<Card>
+	abstract fun comparator(card: Card?): Comparator<Card>?
 }

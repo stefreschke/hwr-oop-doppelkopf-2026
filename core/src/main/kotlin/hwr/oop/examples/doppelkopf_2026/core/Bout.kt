@@ -7,7 +7,9 @@ data class Bout(
 	private val cardToBeat: Card? = null,
 	private val leadingPlayer: PlayerId? = null,
 ) {
-	private val comparator: Comparator<Card> = gameType.comparator()
+	private val comparator: Comparator<Card>? by lazy {
+		gameType.comparator(cards.firstOrNull())
+	}
 	
 	init {
 		require(playerOrder.size == 4) { "Player order must have 4 players" }
@@ -42,9 +44,9 @@ data class Bout(
 		if (cardToBeat == null) card else pickStrongestCard(card, cardToBeat)
 	
 	private fun pickStrongestCard(
-		card: Card,
-		cardToBeat: Card,
-	): Card = comparator.compare(card, cardToBeat).let { if (it > 0) card else cardToBeat }
+		candidate: Card,
+		currentCardToBeat: Card,
+	): Card = comparator!!.compare(candidate, currentCardToBeat).let { if (it > 0) candidate else currentCardToBeat }
 	
 	private fun updatedLeadingPlayer(newCardToBeat: Card): PlayerId? =
 		if (newCardToBeat != cardToBeat) nextPlayer() else leadingPlayer

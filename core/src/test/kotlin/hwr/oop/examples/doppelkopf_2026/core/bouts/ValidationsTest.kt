@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import kotlin.intArrayOf
 
-class BoutValidationsTest {
+class ValidationsTest {
 	
 	@ParameterizedTest
 	@ValueSource(ints = [0, 3, 5])

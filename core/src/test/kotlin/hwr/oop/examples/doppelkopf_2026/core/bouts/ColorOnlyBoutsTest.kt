@@ -8,10 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
-/**
- * Tests for a basic color bout. No trump cards played. No other color cards discarded.
- */
-class BasicColorBoutTest {
+class ColorOnlyBoutsTest {
 	
 	// players
 	private val alpha = PlayerId("alpha")
