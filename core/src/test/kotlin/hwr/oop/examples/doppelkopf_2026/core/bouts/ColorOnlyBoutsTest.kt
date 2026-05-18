@@ -20,6 +20,7 @@ class ColorOnlyBoutsTest {
 	private val ace = CardFromStringConverter.convert("AS").first()
 	private val ten = CardFromStringConverter.convert("TS").first()
 	private val king = CardFromStringConverter.convert("KS").first()
+	private val nine = CardFromStringConverter.convert("NS").first()
 	
 	@Test
 	fun `after three cards, is not finished`() {
@@ -128,6 +129,17 @@ class ColorOnlyBoutsTest {
 		// then
 		val winner = finishedBout.winner()
 		assertThat(winner).isNotNull.isEqualTo(gamma).isEqualTo(afterWinningCardPlayed.lastPlayer())
+	}
+	
+	@Test
+	fun `nine leads, king and ten strike, delta wins with ace`() {
+		// given
+		val bout = Bout(gameType = GameType.NORMAL, playerOrder = listOf(alpha, beta, gamma, delta))
+		// when
+		val finishedBout = bout.put(nine).put(king).put(ten).put(ace)
+		// then
+		val winner = finishedBout.winner()
+		assertThat(winner).isNotNull.isEqualTo(delta)
 	}
 	
 	@Test

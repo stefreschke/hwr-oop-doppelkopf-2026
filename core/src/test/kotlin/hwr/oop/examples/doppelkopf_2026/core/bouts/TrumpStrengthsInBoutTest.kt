@@ -5,6 +5,7 @@ import hwr.oop.examples.doppelkopf_2026.core.CardFromStringConverter
 import hwr.oop.examples.doppelkopf_2026.core.GameType
 import hwr.oop.examples.doppelkopf_2026.core.PlayerId
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -49,5 +50,25 @@ class TrumpStrengthsInBoutTest {
 		assertThat(afterSecond.leader()).isEqualTo(beta)
 		assertThat(afterThird.leader()).isEqualTo(gamma)
 		assertThat(afterFourth.leader()).isEqualTo(delta)
+	}
+	
+	@Test
+	fun `two dulles, first dulle wins`() {
+		// given
+		val (dulle, secondDulle, weakTrump) = CardFromStringConverter.convert("DULLE", "DULLE", "KD")
+		val bout = Bout(
+			gameType = GameType.NORMAL,
+			playerOrder = listOf(alpha, beta, gamma, delta),
+		)
+		// when
+		val afterFirst = bout.put(dulle)
+		val afterSecond = afterFirst.put(secondDulle)
+		val afterThird = afterSecond.put(weakTrump)
+		val afterFourth = afterThird.put(weakTrump)
+		// then
+		assertThat(afterFirst.leader()).isEqualTo(alpha)
+		assertThat(afterSecond.leader()).isEqualTo(alpha)
+		assertThat(afterThird.leader()).isEqualTo(alpha)
+		assertThat(afterFourth.leader()).isEqualTo(alpha)
 	}
 }

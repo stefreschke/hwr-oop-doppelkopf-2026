@@ -27,8 +27,6 @@ enum class GameType {
 				} else {
 					if (a.suit() == b.suit()) {
 						rankComparator.compare(a.rank(), b.rank())
-					} else if (a.suit() == card.suit()) {
-						1
 					} else {
 						-1
 					}
