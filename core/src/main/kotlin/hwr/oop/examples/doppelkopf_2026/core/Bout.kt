@@ -39,6 +39,12 @@ data class Bout(
 	
 	fun winner(): PlayerId? = if (cards.size == 4) leadingPlayer else null
 	
+	fun nextPlayerOrder(): List<PlayerId> {
+		val leader = leadingPlayer ?: return playerOrder
+		val leaderIndex = playerOrder.indexOf(leader)
+		return playerOrder.drop(leaderIndex) + playerOrder.take(leaderIndex)
+	}
+	
 	// methods
 	private fun updatedCardToBeat(card: Card): Card =
 		if (cardToBeat == null) card else pickStrongestCard(card, cardToBeat)

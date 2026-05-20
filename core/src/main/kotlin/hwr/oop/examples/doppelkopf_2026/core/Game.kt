@@ -2,14 +2,46 @@ package hwr.oop.examples.doppelkopf_2026.core
 
 class Game(
 	private val handsOfPlayers: List<Hand>,
+	bouts: List<Bout>,
 	private val players: List<PlayerId> = handsOfPlayers.map { it.player() },
 ) {
+	private val bouts = createNextBoutIfNecessary(bouts)
+	private val activeBout = this.bouts.last()
+	
+	private fun createNextBoutIfNecessary(bouts: List<Bout>): List<Bout> {
+		return if (bouts.isEmpty()) {
+			listOf(
+				Bout(gameType = GameType.NORMAL, playerOrder = players)
+			)
+		} else {
+			val last = bouts.last()
+			if (last.isFinished()) {
+				bouts + Bout(
+					gameType = GameType.NORMAL,
+					playerOrder = last.nextPlayerOrder(),
+				)
+			} else {
+				bouts
+			}
+		}
+	}
+	
+	
 	companion object {
 		fun create(players: List<PlayerId>, withNine: Boolean): Game {
 			require(players.size == 4) { "Doppelkopf is always played with exactly 4 players" }
 			val deck = Deck.createRandom(withNine).toMutableDeck()
 			val hands = buildHandsBasedOn(players, deck, withNine)
-			return Game(handsOfPlayers = hands)
+			val bouts = listOf(
+				Bout(
+					gameType = GameType.NORMAL,
+					playerOrder = players,
+				)
+			)
+			return Game(
+				handsOfPlayers = hands,
+				bouts = bouts
+			)
 		}
 		
 		private fun buildHandsBasedOn(
@@ -44,5 +76,7 @@ class Game(
 		require(player in players) { "Player $player is not in players" }
 		return handsOfPlayers.find { it.player() == player }!!
 	}
+	
+	fun activeBout() = activeBout
 	
 }
