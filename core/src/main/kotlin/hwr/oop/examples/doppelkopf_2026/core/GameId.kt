@@ -8,5 +8,8 @@ import java.util.*
 value class GameId(val value: String) {
 	companion object {
 		fun random(): GameId = GameId(UUID.randomUUID().toString())
+		fun from(uuid: UUID): GameId = GameId(uuid.toString())
 	}
+	
+	fun uuid(): UUID = UUID.fromString(value)
 }

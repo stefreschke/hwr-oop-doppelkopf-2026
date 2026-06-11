@@ -12,10 +12,14 @@ import liquibase.database.jvm.JdbcConnection
 import liquibase.logging.core.NoOpLogService
 import liquibase.resource.ClassLoaderResourceAccessor
 import liquibase.ui.LoggerUIService
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import javax.sql.DataSource
 
-class SqlPersistence(private val dataSource: DataSource): LoadGameByIdPort, SaveGamePort {
+class SqlPersistence(private val dataSource: DataSource) : LoadGameByIdPort, SaveGamePort {
 	
 	constructor(jdbcUrl: String, username: String, password: String) : this(
 		HikariDataSource().apply {
@@ -49,12 +53,25 @@ class SqlPersistence(private val dataSource: DataSource): LoadGameByIdPort, Save
 		}
 	}
 	
-	override fun loadByid(gameId: GameId): Game {
-		TODO("Not yet implemented")
+	override fun save(game: Game) {
+		val gameId = game.id()
+		transaction {
+			DoppelkopfGamesTable.insert {
+				it[id] = gameId.uuid()
+				it[this.game] = game
+			}
+		}
 	}
 	
-	override fun save(game: Game) {
-		TODO("Not yet implemented")
+	override fun loadByid(gameId: GameId): Game {
+		val javaUUID = gameId.uuid()
+		val result = transaction {
+			DoppelkopfGamesTable.select(DoppelkopfGamesTable.game)
+				.where { DoppelkopfGamesTable.id eq javaUUID }.withDistinct()
+				.map { it[DoppelkopfGamesTable.game] }
+				.firstOrNull()
+		}
+		return result ?: throw LoadGameByIdPort.CouldNotLoadException(gameId)
 	}
 	
 }
