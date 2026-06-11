@@ -1,11 +1,15 @@
 package hwr.oop.examples.doppelkopf_2026.core
 
-class Game(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Game(
+	private val gameId: GameId = GameId.random(),
 	private val handsOfPlayers: List<Hand>,
-	bouts: List<Bout>,
+	private val bouts: List<Bout>,
 	private val players: List<PlayerId> = handsOfPlayers.map { it.player() },
 ) {
-	private val bouts = createNextBoutIfNecessary(bouts)
+	// private val bouts = createNextBoutIfNecessary(bouts)
 	private val activeBout = this.bouts.last()
 	
 	private fun createNextBoutIfNecessary(bouts: List<Bout>): List<Bout> {
@@ -26,9 +30,8 @@ class Game(
 		}
 	}
 	
-	
 	companion object {
-		fun create(players: List<PlayerId>, withNine: Boolean): Game {
+		fun createRandomGame(players: List<PlayerId>, withNine: Boolean): Game {
 			require(players.size == 4) { "Doppelkopf is always played with exactly 4 players" }
 			val deck = Deck.createRandom(withNine).toMutableDeck()
 			val hands = buildHandsBasedOn(players, deck, withNine)
@@ -78,5 +81,7 @@ class Game(
 	}
 	
 	fun activeBout() = activeBout
+	
+	fun id(): GameId = gameId
 	
 }

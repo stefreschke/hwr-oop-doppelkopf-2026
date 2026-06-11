@@ -1,6 +1,10 @@
 package hwr.oop.examples.template
 
 import com.zaxxer.hikari.HikariDataSource
+import hwr.oop.examples.doppelkopf_2026.core.Game
+import hwr.oop.examples.doppelkopf_2026.core.GameId
+import hwr.oop.examples.doppelkopf_2026.ports.out.LoadGameByIdPort
+import hwr.oop.examples.doppelkopf_2026.ports.out.SaveGamePort
 import liquibase.Liquibase
 import liquibase.Scope
 import liquibase.database.DatabaseFactory
@@ -11,7 +15,7 @@ import liquibase.ui.LoggerUIService
 import org.jetbrains.exposed.v1.jdbc.Database
 import javax.sql.DataSource
 
-class SqlPersistence(private val dataSource: DataSource) {
+class SqlPersistence(private val dataSource: DataSource): LoadGameByIdPort, SaveGamePort {
 	
 	constructor(jdbcUrl: String, username: String, password: String) : this(
 		HikariDataSource().apply {
@@ -43,6 +47,14 @@ class SqlPersistence(private val dataSource: DataSource) {
 				).update("")
 			}
 		}
+	}
+	
+	override fun loadByid(gameId: GameId): Game {
+		TODO("Not yet implemented")
+	}
+	
+	override fun save(game: Game) {
+		TODO("Not yet implemented")
 	}
 	
 }

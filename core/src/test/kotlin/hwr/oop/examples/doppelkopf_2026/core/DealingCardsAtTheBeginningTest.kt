@@ -21,7 +21,7 @@ class DealingCardsAtTheBeginningTest {
 	)
 	fun `create new Game, each player has correct hand size`(withNine: Boolean, expectedNumberOfCards: Int) {
 		// given
-		val game = Game.create(
+		val game = Game.createRandomGame(
 			players = players,
 			withNine = withNine,
 		)
@@ -39,7 +39,7 @@ class DealingCardsAtTheBeginningTest {
 	@ValueSource(booleans = [true, false])
 	fun `create new Game, each card exists twice across all players`(withNine: Boolean) {
 		// given
-		val game = Game.create(
+		val game = Game.createRandomGame(
 			players = players,
 			withNine = withNine,
 		)
@@ -65,7 +65,7 @@ class DealingCardsAtTheBeginningTest {
 		// when
 		val players = (1..invalidNumberOfPlayers).map { PlayerId("player$it") }
 		assertThatThrownBy {
-			Game.create(
+			Game.createRandomGame(
 				players = players,
 				withNine = true,
 			)

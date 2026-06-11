@@ -1,5 +1,8 @@
 package hwr.oop.examples.doppelkopf_2026.core
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Bout(
 	private val gameType: GameType,
 	private val playerOrder: List<PlayerId>,
