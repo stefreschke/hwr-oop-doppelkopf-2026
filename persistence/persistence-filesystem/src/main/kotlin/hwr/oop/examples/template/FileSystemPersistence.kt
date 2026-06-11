@@ -2,6 +2,7 @@ package hwr.oop.examples.template
 
 import hwr.oop.examples.doppelkopf_2026.core.Game
 import hwr.oop.examples.doppelkopf_2026.core.GameId
+import hwr.oop.examples.doppelkopf_2026.ports.out.GameRepository
 import hwr.oop.examples.doppelkopf_2026.ports.out.LoadGameByIdPort
 import hwr.oop.examples.doppelkopf_2026.ports.out.SaveGamePort
 import kotlinx.serialization.json.Json
@@ -17,7 +18,7 @@ private val json = Json {
 class FileSystemPersistence(
 	configuration: FileSystemPersistenceConfiguration,
 	private val fileSystem: FileSystem = FileSystem.SYSTEM,
-) : SaveGamePort, LoadGameByIdPort {
+) : GameRepository, SaveGamePort {
 	
 	private val directory = configuration.directory
 	

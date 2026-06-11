@@ -2,6 +2,7 @@ package hwr.oop.examples.template.service
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import hwr.oop.examples.doppelkopf_2026.ports.out.GameRepository
 import hwr.oop.examples.template.SqlPersistence
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -22,6 +24,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @Disabled("Requires Docker")
 @Testcontainers
 @SpringBootTest(webEnvironment = MOCK)
+@DirtiesContext
 class ServiceSqlTest {
 	
 	companion object {
@@ -32,7 +35,7 @@ class ServiceSqlTest {
 	
 	@TestConfiguration
 	class Config {
-		private val persistence = SqlPersistence(
+		private val gameRepository = SqlPersistence(
 			HikariDataSource(HikariConfig().apply {
 				jdbcUrl = postgres.jdbcUrl
 				username = postgres.username
@@ -42,7 +45,7 @@ class ServiceSqlTest {
 		
 		@Bean
 		@Primary
-		fun persistence(): Any = persistence
+		fun persistence(): GameRepository = gameRepository
 	}
 	
 	@Autowired

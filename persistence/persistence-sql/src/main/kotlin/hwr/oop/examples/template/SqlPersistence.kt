@@ -3,6 +3,7 @@ package hwr.oop.examples.template
 import com.zaxxer.hikari.HikariDataSource
 import hwr.oop.examples.doppelkopf_2026.core.Game
 import hwr.oop.examples.doppelkopf_2026.core.GameId
+import hwr.oop.examples.doppelkopf_2026.ports.out.GameRepository
 import hwr.oop.examples.doppelkopf_2026.ports.out.LoadGameByIdPort
 import hwr.oop.examples.doppelkopf_2026.ports.out.SaveGamePort
 import liquibase.Liquibase
@@ -19,7 +20,7 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import javax.sql.DataSource
 
-class SqlPersistence(private val dataSource: DataSource) : LoadGameByIdPort, SaveGamePort {
+class SqlPersistence(private val dataSource: DataSource) : GameRepository {
 	
 	constructor(jdbcUrl: String, username: String, password: String) : this(
 		HikariDataSource().apply {
@@ -28,12 +29,10 @@ class SqlPersistence(private val dataSource: DataSource) : LoadGameByIdPort, Sav
 			setPassword(password)
 		}
 	)
-	
 	init {
 		runLiquibaseMigrations()
 		Database.connect(dataSource)
 	}
-	
 	private fun runLiquibaseMigrations() {
 		System.setProperty("liquibase.command.update.showSummary", "OFF")
 		val scopeAttrs = mapOf(
