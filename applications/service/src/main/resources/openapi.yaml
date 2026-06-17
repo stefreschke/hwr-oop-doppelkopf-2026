@@ -75,6 +75,199 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /games/{gameId}/play:
+    post:
+      summary: Play a card on the game.
+      operationId: playCard
+      tags:
+        - GameWrite
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayCardRequest'
+      responses:
+        '200':
+          description: Card played successfully on game.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /games/{gameId}/contracts/propose:
+    post:
+      summary: Propose a contract, i.e. a different kind of game is to be played
+      operationId: proposeContract
+      tags:
+        - GameWrite
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProposeContractRequest'
+      responses:
+        '200':
+          description: Contract proposed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /games/{gameId}/contracts/accept-armut:
+    post:
+      summary: Accept an already proposed Armut.
+      operationId: acceptArmut
+      tags:
+        - GameWrite
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptArmutRequest'
+      responses:
+        '200':
+          description: Armut accepted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /games/{gameId}/contracts/pass:
+    post:
+      summary: Pass on proposing contracts. If all players pass, a normal game is played.
+      operationId: passOnContractPropose
+      tags:
+        - GameWrite
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PassOnContractsRequest'
+      responses:
+        '200':
+          description: Passing on contracts succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /games/{gameId}/announcement:
+    post:
+      summary: Make an announcement, e.g. Re, Contra.
+      operationId: announce
+      tags:
+        - GameWrite
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnouncementRequest'
+      responses:
+        '200':
+          description: Announcement successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
@@ -149,17 +342,86 @@ components:
     CreateGameRequest:
       type: object
       required:
-        - name
         - playerIds
       properties:
-        name:
-          type: string
-          description: The name of the game
         playerIds:
           type: array
           items:
             $ref: '#/components/schemas/PlayerId'
 
+    PlayCardRequest:
+      type: object
+      required:
+        - playerId
+        - card
+      properties:
+        playerId:
+          $ref: '#/components/schemas/PlayerId'
+        card:
+          $ref: '#/components/schemas/Card'
+
+    AnnouncementRequest:
+      type: object
+      required:
+        - playerId
+        - announcement
+      properties:
+        playerId:
+          $ref: '#/components/schemas/PlayerId'
+        announcement:
+          type: string
+          enum:
+            - RE
+            - CONTRA
+            - UNTER_90
+            - UNTER_60
+            - UNTER_30
+            - SCHWARZ
+
+    ProposeContractRequest:
+      type: object
+      required:
+        - playerId
+        - proposition
+      properties:
+        playerId:
+          $ref: '#/components/schemas/PlayerId'
+        proposition:
+          type: string
+          enum:
+            - HOCHZEIT
+            - ARMUT
+            - OBER_SOLO
+            - UNTER_SOLO
+            - FLEISCHLOS
+            - TRUMPF_SOLO
+            - HEARTS_SOLO
+            - SPADES_SOLO
+            - CLUBS_SOLO
+        cards:
+          type: string
+          description: Only present on ARMUT.
+
+    AcceptArmutRequest:
+      type: object
+      required:
+        - playerId
+        - returnedTrumpCards
+      properties:
+        playerId:
+          $ref: '#/components/schemas/PlayerId'
+        returnedTrumpCards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+
+    PassOnContractsRequest:
+      type: object
+      required:
+        - playerId
+      properties:
+        playerId:
+          type: string
 
     ErrorResponse:
       type: object
