@@ -31,8 +31,12 @@ data class Game(
 	}
 	
 	companion object {
-		fun createRandomGame(players: List<PlayerId>, withNine: Boolean): Game {
-			require(players.size == 4) { "Doppelkopf is always played with exactly 4 players" }
+		fun createRandomGame(
+			players: List<PlayerId>,
+			withNine: Boolean,
+			gameId: GameId = GameId.random(),
+		): Game {
+			requireValidNumberOfPlayers(players)
 			val deck = Deck.createRandom(withNine).toMutableDeck()
 			val hands = buildHandsBasedOn(players, deck, withNine)
 			val bouts = listOf(
@@ -42,9 +46,16 @@ data class Game(
 				)
 			)
 			return Game(
+				gameId = gameId,
 				handsOfPlayers = hands,
 				bouts = bouts
 			)
+		}
+		
+		private fun requireValidNumberOfPlayers(players: List<PlayerId>) {
+			if (players.size != 4) {
+				throw InvalidNumberOfPlayersException(players)
+			}
 		}
 		
 		private fun buildHandsBasedOn(

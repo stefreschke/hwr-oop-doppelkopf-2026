@@ -42,7 +42,7 @@
     <liquibase.version>4.31.0</liquibase.version>
     <testcontainers.version>2.0.5</testcontainers.version>
     <testcontainers-postgresql.version>2.0.5</testcontainers-postgresql.version>
-    <mockk.version>1.13.12</mockk.version>
+    <mockk.version>1.14.11</mockk.version>
 
     <!-- Plugin versions -->
     <maven-surefire.version>3.5.2</maven-surefire.version>

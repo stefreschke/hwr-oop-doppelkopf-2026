@@ -348,6 +348,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlayerId'
+        withNines:
+          type: boolean
+          default: false
 
     PlayCardRequest:
       type: object

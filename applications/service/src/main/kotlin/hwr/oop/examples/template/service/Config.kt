@@ -1,5 +1,6 @@
 package hwr.oop.examples.template.service
 
+import hwr.oop.examples.doppelkopf_2026.adapters.`in`.NewGameUseCase
 import hwr.oop.examples.doppelkopf_2026.ports.out.GameRepository
 import hwr.oop.examples.template.FileSystemPersistence
 import hwr.oop.examples.template.FileSystemPersistenceConfiguration
@@ -34,7 +35,12 @@ class Config {
 	}
 	
 	@Bean
-	@ConditionalOnMissingBean
+	// @ConditionalOnMissingBean
 	fun persistence(): GameRepository = gamePersistence
+	
+	@Bean
+	fun newGameUseCase() = NewGameUseCase(
+		saveGamePort = gamePersistence
+	)
 	
 }

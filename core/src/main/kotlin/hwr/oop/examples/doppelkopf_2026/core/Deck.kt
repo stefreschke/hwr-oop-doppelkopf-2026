@@ -1,11 +1,11 @@
 package hwr.oop.examples.doppelkopf_2026.core
 
-data class Deck(
+internal data class Deck(
 	private val cards: List<Card>,
 ) {
-	fun cards(): List<Card> = cards
+	internal fun cards(): List<Card> = cards
 	
-	fun toMutableDeck(): MutableDeck = MutableDeck(cards.toMutableList())
+	internal fun toMutableDeck(): MutableDeck = MutableDeck(cards.toMutableList())
 	
 	companion object {
 		fun createRandom(includeNine: Boolean): Deck = Deck(

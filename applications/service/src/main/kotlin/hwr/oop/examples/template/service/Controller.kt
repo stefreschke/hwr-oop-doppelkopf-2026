@@ -1,5 +1,6 @@
 package hwr.oop.examples.template.service
 
+import hwr.oop.examples.doppelkopf_2026.adapters.`in`.NewGameUseCase
 import hwr.oop.examples.template.service.api.GameReadApi
 import hwr.oop.examples.template.service.api.GameWriteApi
 import hwr.oop.examples.template.service.model.*
@@ -8,14 +9,22 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class Controller : GameReadApi, GameWriteApi {
+class Controller(
+	private val newGameUseCase: NewGameUseCase,
+) : GameReadApi, GameWriteApi {
 	
 	override fun getGame(gameId: String?): ResponseEntity<GameResponse> {
 		TODO("Not yet implemented")
 	}
 	
 	override fun createGame(createGameRequest: @Valid CreateGameRequest?): ResponseEntity<GameCreatedResponse> {
-		TODO("Not yet implemented")
+		require(createGameRequest != null) { "required request body (CreateGameRequest) was null" }
+		val command = with(RequestMapper) {
+			createGameRequest.asCommand()
+		}
+		newGameUseCase.startGame(command)
+		val response = GameCreatedResponse(command.gameId)
+		return ResponseEntity.status(201).body(response)
 	}
 	
 	override fun playCard(

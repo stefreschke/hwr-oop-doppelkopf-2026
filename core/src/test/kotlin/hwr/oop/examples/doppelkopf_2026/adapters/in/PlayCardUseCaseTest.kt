@@ -22,11 +22,11 @@ class PlayCardUseCaseTest {
 		
 		// when
 		useCase.playAction(
-			PlayActionCommand(
+			PlayActionUseCase.Command(
 				gameId.value,
 				player = "alpha",
-				suit = Suit.SPADES,
-				rank = Rank.ACE,
+				suit = Suit.SPADES.name,
+				rank = Rank.ACE.name,
 			)
 		)
 		
