@@ -48,6 +48,8 @@ data class Bout(
 		return playerOrder.drop(leaderIndex) + playerOrder.take(leaderIndex)
 	}
 	
+	fun playedCardsInOrder(): List<Card> = cards
+	
 	// methods
 	private fun updatedCardToBeat(card: Card): Card =
 		if (cardToBeat == null) card else pickStrongestCard(card, cardToBeat)
@@ -59,4 +61,5 @@ data class Bout(
 	
 	private fun updatedLeadingPlayer(newCardToBeat: Card): PlayerId? =
 		if (newCardToBeat != cardToBeat) nextPlayer() else leadingPlayer
+	
 }

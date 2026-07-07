@@ -18,11 +18,11 @@ class PlayCardUseCaseTest {
 		val game = Fixture.game()
 		val gameId = game.id()
 		persistence.save(game)
-		val useCase = PlayActionUseCase(persistence, persistence)
+		val useCase = PlayCardUseCase(persistence, persistence)
 		
 		// when
 		useCase.playAction(
-			PlayActionUseCase.Command(
+			PlayCardUseCase.Command(
 				gameId.value,
 				player = "alpha",
 				suit = Suit.SPADES.name,

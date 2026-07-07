@@ -4,14 +4,14 @@ import hwr.oop.examples.doppelkopf_2026.core.GameId
 import hwr.oop.examples.doppelkopf_2026.ports.out.LoadGameByIdPort
 import hwr.oop.examples.doppelkopf_2026.ports.out.SaveGamePort
 
-class PlayActionUseCase(
-	private val loadGamePort: LoadGameByIdPort,
+class PlayCardUseCase(
+	private val loadGameByIdPort: LoadGameByIdPort,
 	private val saveGamePort: SaveGamePort,
 ) {
 	
 	fun playAction(command: Command) {
 		val gameId = GameId(command.gameId)
-		val loadedGame = loadGamePort.loadByid(gameId)
+		val loadedGame = loadGameByIdPort.loadByid(gameId)
 		val updatedGame = TODO("domain logic on game")
 		saveGamePort.save(updatedGame)
 	}

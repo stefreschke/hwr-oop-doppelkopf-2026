@@ -96,3 +96,4 @@ data class Game(
 	fun id(): GameId = gameId
 	
 }
+
